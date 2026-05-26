@@ -96,20 +96,18 @@
       z-index: 2;
     }
 
-    /* Variante para alinhar o botão da equipe à esquerda */
     .team-inner {
       justify-content: flex-start;
       padding: 10px 16px;
     }
 
     /* =========================================
-       ELEMENTOS ESPECÍFICOS (LOGO FINA E HOVER)
+       ELEMENTOS ESPECÍFICOS
        ========================================= */
     .avatar-wrapper {
       width: 110px;
       height: 110px;
       border-radius: 50%;
-      /* Borda afinada novamente */
       padding: 2px;
       margin-bottom: 8px;
       position: relative;
@@ -150,7 +148,6 @@
     
     .svg-icon { width: 22px; height: 22px; fill: currentColor; }
 
-    /* Foto Redonda dos Membros da Equipe */
     .team-avatar {
       width: 32px;
       height: 32px;
@@ -160,7 +157,6 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    /* Título Divisor da Equipe */
     .section-title {
       color: #ffffff;
       font-size: 14px;
@@ -172,8 +168,33 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
 
+    /* Selo BeChangeMaker no rodapé */
+    .footer-badge {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+    .footer-badge:hover { opacity: 1; }
+    .footer-badge span {
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    .footer-badge img {
+      height: 35px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
     /* =========================================
-       MODAL DE VÍDEO (YOUTUBE) - ANIMAÇÃO SUAVE
+       MODAL DE VÍDEO (YOUTUBE)
        ========================================= */
     .modal-overlay {
       position: fixed;
@@ -186,13 +207,13 @@
       justify-content: center;
       z-index: 100;
       opacity: 0;
-      pointer-events: none; /* Bloqueia cliques quando invisível */
+      pointer-events: none; 
       transition: opacity 0.4s ease;
     }
 
     .modal-overlay.show { 
       opacity: 1; 
-      pointer-events: auto; /* Libera cliques */
+      pointer-events: auto; 
     }
 
     .modal-content {
@@ -204,7 +225,6 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       padding: 10px;
-      /* Salto elástico e fade in configurados perfeitamente */
       transform: scale(0.85) translateY(40px);
       opacity: 0;
       transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -302,6 +322,18 @@
       </div>
     </a>
 
+    <a href="sketch.png" target="_blank" class="liquid-wrapper">
+      <div class="liquid-inner">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+          <path d="M2 2l7.586 7.586"></path>
+          <circle cx="11" cy="11" r="2"></circle>
+        </svg>
+        Project Sketch
+      </div>
+    </a>
+
     <a href="#" target="_blank" class="liquid-wrapper">
       <div class="liquid-inner">
         <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.969 5.265A9.957 9.957 0 0 1 21.365 10h-4.996a25.32 25.32 0 0 0-2.597-4.735h5.197zM12 2.052c1.362 0 2.686.29 3.902.822-1.01 1.638-1.782 3.447-2.274 5.391H10.372c-.492-1.944-1.264-3.753-2.274-5.391A9.954 9.954 0 0 1 12 2.052zm-6.969 3.213h5.197a25.32 25.32 0 0 0-2.597 4.735H2.635A9.957 9.957 0 0 1 5.031 5.265zm-2.88 6.735H7.28a25.33 25.33 0 0 0 0 4h-5.13a9.958 9.958 0 0 1 0-4zm2.88 6.735a9.957 9.957 0 0 1-2.396-4.735h4.996a25.32 25.32 0 0 0 2.597 4.735H5.031zm6.969 3.213a9.954 9.954 0 0 1-3.902-.822c1.01-1.638 1.782-3.447 2.274-5.391h3.256c.492 1.944 1.264 3.753 2.274 5.391a9.954 9.954 0 0 1-3.902.822zm4.368-8.126a25.33 25.33 0 0 0 0-4h5.13a9.958 9.958 0 0 1 0 4h-5.13zM18.969 18.735h-5.197a25.32 25.32 0 0 0 2.597-4.735h4.996a9.957 9.957 0 0 1-2.396 4.735z"/></svg>
@@ -313,38 +345,43 @@
 
     <a href="https://www.linkedin.com/in/gustavo-santos-ara%C3%BAjo-4bb764219/" target="_blank" class="liquid-wrapper">
       <div class="liquid-inner team-inner">
-        <img src="gustavo.jpg" alt="Gustavo" class="team-avatar">
+        <img src="gustavo.png" alt="Gustavo Araújo" class="team-avatar">
         Gustavo Araújo
       </div>
     </a>
 
     <a href="https://www.linkedin.com/in/sabrina-filizola-338a89234/" target="_blank" class="liquid-wrapper">
       <div class="liquid-inner team-inner">
-        <img src="sabrina.jpg" alt="Sabrina" class="team-avatar">
+        <img src="sabrina.png" alt="Sabrina Filizola" class="team-avatar">
         Sabrina Filizola
       </div>
     </a>
 
     <a href="https://www.linkedin.com/in/daniel-santana-1b37a635b/" target="_blank" class="liquid-wrapper">
       <div class="liquid-inner team-inner">
-        <img src="daniel.jpg" alt="Daniel" class="team-avatar">
+        <img src="daniel.png" alt="Daniel Santana" class="team-avatar">
         Daniel Santana
       </div>
     </a>
 
     <a href="https://www.linkedin.com/in/milena-aragon-53105935b/" target="_blank" class="liquid-wrapper">
       <div class="liquid-inner team-inner">
-        <img src="milena.jpg" alt="Milena" class="team-avatar">
+        <img src="milena.png" alt="Milena Aragon" class="team-avatar">
         Milena Aragon
       </div>
     </a>
 
     <a href="https://www.linkedin.com/in/ana-j%C3%BAlia-chalegre-barboza-8318982b4/" target="_blank" class="liquid-wrapper">
       <div class="liquid-inner team-inner">
-        <img src="ana.jpg" alt="Ana Júlia" class="team-avatar">
+        <img src="ana.png" alt="Ana Júlia Chalegre" class="team-avatar">
         Ana Júlia Chalegre
       </div>
     </a>
+
+    <div class="footer-badge">
+      <span>Global Finalists</span>
+      <img src="bechangemaker.png" alt="BeChangeMaker Logo">
+    </div>
 
   </div>
 
@@ -373,7 +410,6 @@
     const MEU_ID_YOUTUBE = "lAISFycVCpM"; 
     // =========================
 
-    // Rastreamento de Mouse para os botões (Liquid Glass)
     const wrappers = document.querySelectorAll('.liquid-wrapper');
     wrappers.forEach(el => {
       el.addEventListener('mousemove', e => {
@@ -390,45 +426,26 @@
     let hoverTimer;
 
     function openModal() {
-      // Ativa a classe que faz a animação suave acontecer
       modal.classList.add('show');
       
-      // Injeta a URL para o vídeo começar a tocar
       if (ytPlayer.src.indexOf(MEU_ID_YOUTUBE) === -1) {
         ytPlayer.src = `https://www.youtube.com/embed/${MEU_ID_YOUTUBE}?autoplay=1&rel=0&modestbranding=1`;
       }
     }
 
     function closeModal() {
-      // Remove a classe para a animação de saída acontecer suavemente
       modal.classList.remove('show');
-      
-      // Espera 400ms (tempo da animação) para cortar o vídeo
       setTimeout(() => {
         ytPlayer.src = "";
       }, 400);
     }
 
-    // Hover de 1.5s na Logo
-    avatar.addEventListener('mouseenter', () => {
-      hoverTimer = setTimeout(openModal, 1500);
-    });
-    avatar.addEventListener('mouseleave', () => {
-      clearTimeout(hoverTimer);
-    });
+    avatar.addEventListener('mouseenter', () => hoverTimer = setTimeout(openModal, 1500));
+    avatar.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+    avatar.addEventListener('click', () => { clearTimeout(hoverTimer); openModal(); });
 
-    // Clique na Logo (para celular ou se não quiser esperar 1.5s)
-    avatar.addEventListener('click', () => { 
-      clearTimeout(hoverTimer); 
-      openModal(); 
-    });
-
-    // Fechar Modal
     closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { 
-      // Se clicar no fundo escuro fora do vídeo, fecha
-      if(e.target === modal) closeModal(); 
-    });
+    modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
   </script>
 
 </body>
