@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaSun - Link Tree</title>
+  <title>AquaSun - Pure Water from Solar Energy</title>
   
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
 
@@ -15,38 +15,29 @@
       --glass-border: rgba(255, 255, 255, 0.5);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', sans-serif;
       background: url('background.svg') center center / cover fixed no-repeat;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
+      color: var(--text-blue);
+      line-height: 1.6;
     }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      margin-top: 10px;
+    /* Estilo do Vidro Fosco */
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     }
 
-    /* =========================================
-       EFEITO LIQUID GLASS
-       ========================================= */
+    /* Liquid Glass Wrapper (Botões e Cards) */
     .liquid-wrapper {
       position: relative;
-      width: 100%;
       border-radius: 18px;
       padding: 2px; 
       background: var(--glass-border);
@@ -56,294 +47,249 @@
       transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
-
-    .liquid-wrapper:active {
-      transform: scale(0.96);
-    }
-
+    .liquid-wrapper:hover { transform: translateY(-3px); }
     .liquid-wrapper::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: radial-gradient(circle 70px at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 1), transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      z-index: 1;
+      opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1;
     }
-
-    .liquid-wrapper:hover::before {
-      opacity: 1;
-    }
-
+    .liquid-wrapper:hover::before { opacity: 1; }
     .liquid-inner {
       position: relative;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       background: var(--glass-bg);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-blue); font-weight: 600; padding: 14px 20px; z-index: 2;
+    }
+
+    /* Layout Sections */
+    section {
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: var(--text-blue);
-      font-weight: 600;
-      font-size: 16px;
-      padding: 14px 20px;
-      z-index: 2;
-    }
-
-    /* =========================================
-       ELEMENTOS ESPECÍFICOS
-       ========================================= */
-    .avatar-wrapper {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      padding: 3px;
-      margin-bottom: 8px;
-    }
-    .avatar-inner {
-      border-radius: 50%;
-      padding: 0;
-      background: white; 
-    }
-    .avatar-inner img {
+      padding: 60px 20px;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
     }
 
-    .name-wrapper {
-      width: auto;
-      margin-bottom: 2px;
+    .content-container { width: 100%; max-width: 800px; }
+
+    /* Hero / Bio Section */
+    .hero { justify-content: center; text-align: center; }
+    .hero-container { max-width: 400px; }
+
+    .avatar-wrapper { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 16px; }
+    .avatar-inner img { width: 100%; border-radius: 50%; }
+
+    h1.main-title { font-size: 42px; font-weight: 800; margin-bottom: 20px; line-height: 1.1; }
+
+    /* Team Grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; margin-top: 30px;
     }
-    .name-inner {
-      padding: 8px 24px;
-      font-size: 28px;
+    .team-card { text-align: center; }
+    .team-card h4 { font-size: 18px; margin-top: 10px; }
+
+    /* Technical List */
+    .tech-list { list-style: none; margin-top: 20px; }
+    .tech-list li {
+      background: rgba(255,255,255,0.2);
+      margin-bottom: 12px; padding: 15px;
+      border-radius: 12px; border-left: 5px solid var(--text-orange);
     }
 
-    .bio-pill {
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      padding: 12px 20px;
-      border-radius: 20px;
-      text-align: center;
-      font-size: 14px;
-      color: var(--text-blue);
-      font-weight: 500;
-      margin-bottom: 8px;
-      line-height: 1.4;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    /* Prototype Section */
+    .sketch-img {
+      width: 100%; border-radius: 20px;
+      background: rgba(255,255,255,0.4);
+      padding: 10px; border: 1px solid var(--glass-border);
     }
-    .bio-pill strong { font-weight: 800; }
-    .bio-pill .highlight { color: var(--text-orange); font-weight: 800; }
-    .svg-icon { width: 22px; height: 22px; fill: currentColor; }
 
-    /* =========================================
-       MODAL DE VÍDEO (YOUTUBE)
-       ========================================= */
+    /* Modal Styling */
     .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: none; 
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; opacity: 0; transition: opacity 0.3s;
     }
-
-    .modal-overlay.show { opacity: 1; }
-
+    .modal-overlay.show { display: flex; opacity: 1; }
     .modal-content {
-      width: 90%;
-      /* Aumentado de 360px para 480px para dar mais destaque ao vídeo */
-      max-width: 480px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 24px;
-      padding: 10px;
-      transform: scale(0.8) translateY(30px);
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
+      width: 90%; max-width: 500px; background: rgba(255,255,255,0.2);
+      border-radius: 24px; padding: 10px; position: relative;
+      transform: translateY(20px); transition: 0.4s;
     }
+    .modal-overlay.show .modal-content { transform: translateY(0); }
+    .youtube-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 16px; overflow: hidden; }
+    .youtube-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    .modal-overlay.show .modal-content {
-      transform: scale(1) translateY(0);
-    }
-
-    /* NOVO BOTÃO DE FECHAR (Liquid Glass Minimalista) */
     .close-btn {
-      position: absolute;
-      top: -16px;
-      right: -16px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      color: #ffffff;
-      border-radius: 50%;
-      width: 38px; height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.4);
-      z-index: 10;
-      transition: all 0.2s ease;
+      position: absolute; top: -15px; right: -15px;
+      background: white; border-radius: 50%; width: 35px; height: 35px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
     }
 
-    .close-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
-    }
-
-    /* Container Responsivo para o iframe do YouTube */
-    .youtube-container {
-      position: relative;
-      width: 100%;
-      /* 56.25% é para vídeos 16:9. Para vídeos verticais (Shorts), use 177.77% */
-      padding-bottom: 56.25%; 
-      border-radius: 16px;
-      overflow: hidden;
-      background: #000;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-
-    .youtube-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
+    .svg-icon { width: 20px; height: 20px; fill: currentColor; }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    
-    <div id="avatar-trigger" class="liquid-wrapper avatar-wrapper" title="Hold or Click for video">
-      <div class="liquid-inner avatar-inner">
-        <img src="logo.png" alt="Logo AquaSun">
+  <section class="hero">
+    <div class="hero-container content-container">
+      <div id="avatar-trigger" class="liquid-wrapper avatar-wrapper">
+        <div class="liquid-inner avatar-inner">
+          <img src="logo.png" alt="AquaSun Logo">
+        </div>
+      </div>
+
+      <div class="liquid-wrapper" style="width: auto; display: inline-block; margin-bottom: 20px;">
+        <div class="liquid-inner" style="font-size: 28px;">
+          <span style="font-weight: 800;">Aqua</span><span style="color: var(--text-orange); font-weight: 800;">Sun</span>
+        </div>
+      </div>
+
+      <div class="glass-pill" style="margin-bottom: 20px;">
+        Transforming solar energy into<br>
+        <strong>clean water</strong> & <span style="color: var(--text-orange); font-weight: 800;">liquid dignity</span> ☀️
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <a href="https://linkedin.com/company/aquasunproject" target="_blank" class="liquid-wrapper">
+          <div class="liquid-inner">LinkedIn</div>
+        </a>
+        <a href="https://instagram.com/aquasunproject" target="_blank" class="liquid-wrapper">
+          <div class="liquid-inner">Instagram</div>
+        </a>
+        <a href="#details" class="liquid-wrapper" style="background: rgba(254, 175, 22, 0.4);">
+          <div class="liquid-inner">Learn More ↓</div>
+        </a>
       </div>
     </div>
+  </section>
 
-    <div class="liquid-wrapper name-wrapper">
-      <div class="liquid-inner name-inner">
-        <span style="color: var(--text-blue); font-weight: 700;">Aqua</span>
-        <span style="color: var(--text-orange); font-weight: 700;">Sun</span>
+  <section id="details">
+    <div class="content-container">
+      <h2 style="font-size: 32px; margin-bottom: 20px; text-align: center;">A Hybrid Solar System for Water Purification</h2>
+      <div class="glass-pill">
+        <p style="font-size: 18px; text-align: center;">
+          The AquaSun project proposes a solution to water scarcity and energy inefficiency by integrating high-tech solar energy with active distillation.
+        </p>
       </div>
     </div>
+  </section>
 
-    <div class="bio-pill">
-      Transforming solar energy into<br>
-      <strong>clean water</strong> & <span class="highlight">liquid dignity</span> ☀️
+  <section>
+    <div class="content-container">
+      <h2 style="font-size: 32px; margin-bottom: 30px; text-align: center;">Meet Team Gigi's</h2>
+      <div class="team-grid">
+        <div class="liquid-wrapper team-card">
+          <div class="liquid-inner" style="flex-direction: column; padding: 30px;">
+            <strong>Sabrina Filizola</strong>
+          </div>
+        </div>
+        <div class="liquid-wrapper team-card">
+          <div class="liquid-inner" style="flex-direction: column; padding: 30px;">
+            <strong>Milena Aragon</strong>
+          </div>
+        </div>
+        <div class="liquid-wrapper team-card">
+          <div class="liquid-inner" style="flex-direction: column; padding: 30px;">
+            <strong>Ana Júlia Chalegre</strong>
+          </div>
+        </div>
+        <div class="liquid-wrapper team-card">
+          <div class="liquid-inner" style="flex-direction: column; padding: 30px;">
+            <strong>Gustavo Araujo</strong>
+          </div>
+        </div>
+        <div class="liquid-wrapper team-card">
+          <div class="liquid-inner" style="flex-direction: column; padding: 30px;">
+            <strong>Daniel Hakam</strong>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <a href="https://www.linkedin.com/company/aquasunproject/" target="_blank" class="liquid-wrapper">
-      <div class="liquid-inner">
-        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-        LinkedIn
-      </div>
-    </a>
+  </section>
 
-    <a href="https://www.instagram.com/aquasunproject/" target="_blank" class="liquid-wrapper">
-      <div class="liquid-inner">
-        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        Instagram
-      </div>
-    </a>
+  <section>
+    <div class="content-container">
+      <h2 style="font-size: 32px; margin-bottom: 30px; text-align: center;">How it Works & Impact</h2>
+      <ul class="tech-list">
+        <li><strong>Solar Distillation:</strong> Converts unsafe water into safe drinking water using thermal energy.</li>
+        <li><strong>Hybrid Integration:</strong> Integrates photovoltaic panels with Peltier modules for heat recovery.</li>
+        <li><strong>High Efficiency:</strong> Designed to increase overall system yield compared to traditional methods.</li>
+        <li><strong>ODS 6 & 7:</strong> Directly contributing to Clean Water and Affordable & Clean Energy.</li>
+      </ul>
+    </div>
+  </section>
 
-    <a href="https://www.tiktok.com/@aquasunproject" target="_blank" class="liquid-wrapper">
-      <div class="liquid-inner">
-        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-        TikTok
+  <section>
+    <div class="content-container">
+      <h2 style="font-size: 32px; margin-bottom: 30px; text-align: center;">Sketch - Prototype</h2>
+      <img src="prototype.png" alt="Technical Prototype Sketch" class="sketch-img">
+      <div class="glass-pill" style="margin-top: 20px; font-size: 14px;">
+        Our prototype features a copper pipe system for heat exchange, Peltier modules for active distillation, and an aluminum heat sink for condensation.
       </div>
-    </a>
+    </div>
+  </section>
 
-    <a href="#" target="_blank" class="liquid-wrapper">
-      <div class="liquid-inner">
-        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.969 5.265A9.957 9.957 0 0 1 21.365 10h-4.996a25.32 25.32 0 0 0-2.597-4.735h5.197zM12 2.052c1.362 0 2.686.29 3.902.822-1.01 1.638-1.782 3.447-2.274 5.391H10.372c-.492-1.944-1.264-3.753-2.274-5.391A9.954 9.954 0 0 1 12 2.052zm-6.969 3.213h5.197a25.32 25.32 0 0 0-2.597 4.735H2.635A9.957 9.957 0 0 1 5.031 5.265zm-2.88 6.735H7.28a25.33 25.33 0 0 0 0 4h-5.13a9.958 9.958 0 0 1 0-4zm2.88 6.735a9.957 9.957 0 0 1-2.396-4.735h4.996a25.32 25.32 0 0 0 2.597 4.735H5.031zm6.969 3.213a9.954 9.954 0 0 1-3.902-.822c1.01-1.638 1.782-3.447 2.274-5.391h3.256c.492 1.944 1.264 3.753 2.274 5.391a9.954 9.954 0 0 1-3.902.822zm4.368-8.126a25.33 25.33 0 0 0 0-4h5.13a9.958 9.958 0 0 1 0 4h-5.13zM18.969 18.735h-5.197a25.32 25.32 0 0 0 2.597-4.735h4.996a9.957 9.957 0 0 1-2.396 4.735z"/></svg>
-        Website
+  <section style="min-height: 50vh;">
+    <div class="content-container" style="text-align: center;">
+      <h2 style="font-size: 40px; margin-bottom: 40px;">Thank you!</h2>
+      <div style="display: flex; justify-content: center; gap: 40px; align-items: center; margin-bottom: 40px;">
+        <img src="logo.png" style="width: 100px;" alt="Team Gigi">
+        <div style="height: 60px; width: 2px; background: var(--text-blue);"></div>
+        <div style="font-weight: 800; font-size: 20px;">BeChangeMaker</div>
       </div>
-    </a>
-  </div>
+      <p style="font-size: 14px; opacity: 0.7;">AquaSun Project - IFSP Guarulhos - 2026</p>
+    </div>
+  </section>
 
   <div id="videoModal" class="modal-overlay">
     <div class="modal-content">
-      <button id="closeBtn" class="close-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-
+      <div class="close-btn" id="closeBtn">✕</div>
       <div class="youtube-container">
-        <iframe id="youtubePlayer" src="" title="AquaSun Prototype" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-      
-      <div style="padding: 14px 12px 6px; text-align: center;">
-        <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.6);">The Prototype in Action</h3>
-        <p style="color: #f1f5f9; font-size: 13px; font-weight: 500; margin-top: 4px; text-shadow: 0 1px 3px rgba(0,0,0,0.6);">Hybrid distillation and active cooling.</p>
+        <iframe id="ytPlayer" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
   <script>
-    // === SEU ID DO YOUTUBE ===
-    const MEU_ID_YOUTUBE = "lAISFycVCpM"; 
-    // =========================
+    // ID DO SEU VÍDEO DO YOUTUBE
+    const YT_ID = "lAISFycVCpM";
 
-    const wrappers = document.querySelectorAll('.liquid-wrapper');
-    wrappers.forEach(el => {
-      el.addEventListener('mousemove', e => {
+    // Efeito Liquid Glass
+    document.addEventListener('mousemove', e => {
+      document.querySelectorAll('.liquid-wrapper').forEach(el => {
         const rect = el.getBoundingClientRect();
         el.style.setProperty('--x', `${e.clientX - rect.left}px`);
         el.style.setProperty('--y', `${e.clientY - rect.top}px`);
       });
     });
 
+    // Controle do Modal
     const avatar = document.getElementById('avatar-trigger');
     const modal = document.getElementById('videoModal');
-    const ytPlayer = document.getElementById('youtubePlayer');
     const closeBtn = document.getElementById('closeBtn');
-    let hoverTimer;
+    const ytPlayer = document.getElementById('ytPlayer');
 
-    function openModal() {
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('show'), 10);
-      
-      ytPlayer.src = `https://www.youtube.com/embed/${MEU_ID_YOUTUBE}?autoplay=1&rel=0&modestbranding=1`;
-    }
+    avatar.onclick = () => {
+      modal.classList.add('show');
+      ytPlayer.src = `https://www.youtube.com/embed/${YT_ID}?autoplay=1`;
+    };
 
-    function closeModal() {
+    closeBtn.onclick = () => {
       modal.classList.remove('show');
-      setTimeout(() => {
-        modal.style.display = 'none';
-        ytPlayer.src = "";
-      }, 300);
-    }
+      ytPlayer.src = "";
+    };
 
-    avatar.addEventListener('mouseenter', () => hoverTimer = setTimeout(openModal, 1500));
-    avatar.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
-    avatar.addEventListener('click', () => { clearTimeout(hoverTimer); openModal(); });
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+    modal.onclick = (e) => { if(e.target === modal) closeBtn.onclick(); };
   </script>
-
 </body>
 </html>
