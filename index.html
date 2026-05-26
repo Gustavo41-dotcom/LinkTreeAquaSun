@@ -1,124 +1,149 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aqua Sun - Link Tree</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body { font-family: 'DM Sans', sans-serif; }
-    
-    /* Efeito de Vidro nos Botões */
-    .link-btn { 
-      transition: transform 0.2s, box-shadow 0.2s; 
-      position: relative; 
-      overflow: hidden; 
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .link-btn:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 8px 24px rgba(21, 112, 156, 0.2); 
-    }
-    
-    /* Efeito de Brilho Dinâmico */
-    .glass-shine {
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 30%, transparent 60%);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    
-    .glass-shine.active {
-      opacity: 1;
-    }
-  </style>
-</head>
-<body class="min-h-screen flex items-center justify-center p-6 bg-gradient-to-tr from-slate-100 via-sky-50 to-amber-50">
-
-  <main class="w-full max-w-md flex flex-col items-center gap-5">
-    
-    <div class="w-28 h-28 rounded-full bg-gradient-to-tr from-sky-600 to-amber-500 p-1 shadow-lg">
-      <img class="w-full height-full rounded-full object-cover bg-white" loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80" alt="Logo AquaSun">
-    </div>
-
-    <h1 class="text-center font-bold flex justify-center gap-2 px-6 py-3 rounded-2xl shadow-sm backdrop-blur-md bg-white/40 border border-white/40">
-      <span style="color: rgb(21, 112, 156); font-weight: 700; font-size: 32px;">Aqua</span> 
-      <span style="color: rgb(254, 175, 22); font-weight: 700; font-size: 32px;">Sun</span>
-    </h1>
-
-    <p class="text-center max-w-xs font-medium px-4" style="color: rgb(21, 112, 156); font-size: 15px;">
-      Transforming solar energy into clean water and liquid dignity ☀️💧
-    </p>
-
-    <nav class="w-full flex flex-col gap-3.5 mt-4" aria-label="Links">
-      
-      <a class="link-btn flex items-center justify-center w-full py-3.5 px-4 rounded-xl font-semibold bg-white/70 border border-sky-100" href="https://www.linkedin.com/company/aquasunproject/" target="_blank" rel="noopener noreferrer" style="color: rgb(21, 112, 156); font-size: 16px;">
-        <div class="glass-shine"></div>
-        LinkedIn
-      </a> 
-
-      <a class="link-btn flex items-center justify-center w-full py-3.5 px-4 rounded-xl font-semibold bg-white/70 border border-sky-100" href="https://www.instagram.com/aquasunproject/" target="_blank" rel="noopener noreferrer" style="color: rgb(21, 112, 156); font-size: 16px;">
-        <div class="glass-shine"></div>
-        Instagram
-      </a> 
-
-      <a class="link-btn flex items-center justify-center w-full py-3.5 px-4 rounded-xl font-semibold bg-white/70 border border-sky-100" href="https://www.tiktok.com/@aquasunproject" target="_blank" rel="noopener noreferrer" style="color: rgb(21, 112, 156); font-size: 16px;">
-        <div class="glass-shine"></div>
-        TikTok
-      </a> 
-
-      <a class="link-btn flex items-center justify-center w-full py-3.5 px-4 rounded-xl font-semibold bg-amber-500/10 border border-amber-200" href="https://example.com" target="_blank" rel="noopener noreferrer" style="color: rgb(180, 83, 9); font-size: 16px;">
-        <div class="glass-shine"></div>
-        ☀️ Monografia do Destilador
-      </a>
-
-    </nav>
-  </main>
-
-  <script>
-    let deviceMotion = null;
-    let hasMotionPermission = false;
-    
-    if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
-      document.addEventListener('touchstart', () => {
-        if (!hasMotionPermission) {
-          DeviceMotionEvent.requestPermission()
-            .then(permissionState => {
-              if (permissionState === 'granted') {
-                hasMotionPermission = true;
-                window.addEventListener('devicemotion', handleDeviceMotion);
-              }
-            })
-            .catch(console.error);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaSun - Liquid Dignity</title>
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --shadow-color: rgba(0, 0, 0, 0.2);
         }
-      }, { once: true });
-    } else if (typeof DeviceMotionEvent !== 'undefined') {
-      window.addEventListener('devicemotion', handleDeviceMotion);
-      hasMotionPermission = true;
-    }
-    
-    function handleDeviceMotion(event) {
-      deviceMotion = event;
-    }
-    
-    function updateShineEffect(element, shine, clientX, clientY) {
-      const rect = element.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-      
-      const percentage = {
-        x: (x / rect.width) * 100,
-        y: (y / rect.height) * 100
-      };
-      
-      shine.style.left = `${percentage.x - 50}%`;
-      shine.style.top = `${percentage.y - 50}%`;
-    }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            perspective: 1000px; /* Ambiência 3D para os botões */
+        }
+
+        /* Container Principal do Site da Bio */
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+        }
+
+        /* Header e Identidade Visual */
+        .header-logo {
+            width: 90px;
+            height: 90px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .header-logo img {
+            width: 65%;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .slogan {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* SEÇÃO DO VÍDEO NATIVO (Destaque do Protótipo) */
+        .video-card {
+            width: 100%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .video-card video {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .video-caption {
+            padding: 14px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* LINKS / BOTÕES ESTILO IOS 26 DE MOVIMENTO */
+        .links-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .apple-gyro-btn {
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 18px 24px;
+            border-radius: 16px;
+            color: var(--text-main);
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 10px 30px var(--shadow-color), inset 0 1px 0 rgba(255,255,255,0.05);
+            transform-style: preserve-3d;
+            user-select: none;
+        }
+
+        .apple-gyro-btn:active {
+            transform: scale(0.97) translateY(2px) !important;
+            box-shadow: 0 4px 10px var(--shadow-color) !important;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
