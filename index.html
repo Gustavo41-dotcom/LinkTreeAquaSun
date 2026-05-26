@@ -292,10 +292,8 @@
   </div>
 
   <script>
-    // === COLE AQUI O ID DO SEU VÍDEO DO YOUTUBE ===
-    // Exemplo: se o link for youtube.com/watch?v=dQw4w9WgXcQ, cole apenas dQw4w9WgXcQ
+    // Aqui está o seu ID colocado da forma correta:
     const MEU_ID_YOUTUBE = "lAISFycVCpM"; 
-    // ==============================================
 
     const wrappers = document.querySelectorAll('.liquid-wrapper');
     wrappers.forEach(el => {
@@ -316,17 +314,14 @@
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
       
-      // Injeta a URL do YouTube com Autoplay ligado quando o modal abre
-      if (MEU_ID_YOUTUBE !== "lAISFycVCpM") {
-        ytPlayer.src = `https://www.youtube.com/embed/${lAISFycVCpM}?autoplay=1&rel=0&modestbranding=1`;
-      }
+      // Agora ele injeta a URL do YouTube perfeitamente usando a constante lá de cima
+      ytPlayer.src = `https://www.youtube.com/embed/${MEU_ID_YOUTUBE}?autoplay=1&rel=0&modestbranding=1`;
     }
 
     function closeModal() {
       modal.classList.remove('show');
       setTimeout(() => {
         modal.style.display = 'none';
-        // Remove a URL para fazer o vídeo parar de tocar e gastar dados
         ytPlayer.src = "";
       }, 300);
     }
