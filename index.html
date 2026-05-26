@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Tree</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .link-btn { transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+        .link-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+        
+        .glass-shine {
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3) 30%, transparent 60%);
+          pointer-events: none;
+          opacity: 0;
+        }
+        
+        .glass-shine.active {
+          opacity: 0.6;
+        }
+        
+        h1 {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        h1::after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3) 30%, transparent 60%);
+          pointer-events: none;
+          opacity: 0;
+        }
+        
+        h1.active::after {
+          opacity: 0.6;
+        }
+    </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="min-h-screen flex items-center justify-center p-6 bg-cover bg-center bg-no-repeat">
+  <main class="w-full max-w-md flex flex-col items-center gap-5">
+   <img data-template-id="profile-avatar" class="canva-image w-28 h-28 rounded-full object-cover ring-4 ring-white/20" loading="lazy" src="canva://MAHKt6uF-Yc/1" alt="On (300 X 300 Px) - Logo AquaSun">
+   <h1 class="text-center font-bold flex justify-center gap-1 px-6 py-4 rounded-lg backdrop-blur-md" style="background: rgba(255, 255, 255, 0.15);"><span data-template-id="profile-name-aqua" class="canva-text" style="color: rgb(21, 112, 156); font-weight: 700; font-style: normal; font-size: 32px;">Aqua</span> <span data-template-id="profile-name-sun" class="canva-text" style="color: rgb(254, 175, 22); font-weight: 700; font-style: normal; font-size: 32px;">Sun</span></h1>
+   <p data-template-id="profile-bio" class="canva-text text-center max-w-xs" style="color: rgb(21, 112, 156); font-weight: 400; font-style: normal; font-size: 15px;">Transforming solar energy into clean water and liquid dignity☀️</p>
+   <nav class="w-full flex flex-col gap-3 mt-4" aria-label="Links">
+    <a data-template-id="link-2" class="canva-button link-btn flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-medium" href="https://www.linkedin.com/company/aquasunproject/" target="_blank" rel="noopener noreferrer" style="background: rgba(255, 255, 255, 0.25); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">LinkedIn</a> <a data-template-id="link-1" class="canva-button link-btn flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-medium" href="https://www.instagram.com/aquasunproject/" target="_blank" rel="noopener noreferrer" style="background: rgba(255, 255, 255, 0.25); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Instagram</a> <a data-template-id="link-3" class="canva-button link-btn flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-medium" href="https://www.tiktok.com/@aquasunproject" target="_blank" rel="noopener noreferrer" style="background: rgba(255, 255, 255, 0.25); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">TikTok</a> <a data-template-id="link-5" class="canva-button link-btn flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-medium" href="https://example.com" target="_blank" rel="noopener noreferrer" style="background: rgba(255, 255, 255, 0.25); color: rgb(255, 255, 255); font-weight: 500; font-style: normal; font-size: 16px;">Meu Site</a>
+   </nav>
+  </main>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    // iOS 26-style dynamic glass shine effect
+    let deviceMotion = null;
+    let hasMotionPermission = false;
+    
+    // Check if device supports motion
+    if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+      // iOS 13+ requires permission request
+      document.addEventListener('touchstart', () => {
+        if (!hasMotionPermission) {
+          DeviceMotionEvent.requestPermission()
+            .then(permissionState => {
+              if (permissionState === 'granted') {
+                hasMotionPermission = true;
+                window.addEventListener('devicemotion', handleDeviceMotion);
+              }
+            })
+            .catch(console.error);
+        }
+      }, { once: true });
+    } else if (typeof DeviceMotionEvent !== 'undefined') {
+      // Older Android devices
+      window.addEventListener('devicemotion', handleDeviceMotion);
+      hasMotionPermission = true;
+    }
+    
+    function handleDeviceMotion(event) {
+      deviceMotion = event;
+    }
+    
+    function updateShineEffect(element, shine, clientX, clientY) {
+      const rect = element.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      
+      const percentage = {
+        x: (x / rect.width) * 100,
+        y: (y / rect.height) * 100
+      };
+      
+      shine.style.left = `${percentage.x - 50}%`;
+      shine.style.top = `${percentage.y - 50}%`;
+    }
+    
+    // Desktop mouse tracking
+    document.addEventListener('mousemove', (e) => {
+      // Update link buttons
+      document.querySelectorAll('.link-btn .glass-shine').forEach(shine => {
+        updateShineEffect(shine.parentElement, shine, e.clientX, e.clientY);
+        shine.classList.add('active');
+      });
+      
+      // Update name heading
+      const heading = document.querySelector('h1');
+      if (heading) {
+        const rect = heading.getBoundingClientRect();
+        const percentageX = ((e.clientX - rect.left) / rect.width) * 100;
+        const percentageY = ((e.clientY - rect.top) / rect.height) * 100;
+        heading.style.setProperty('--shine-x', `${percentageX}%`);
+        heading.style.setProperty('--shine-y', `${percentageY}%`);
+        heading.classList.add('active');
+      }
+    });
+    
+    document.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.glass-shine').forEach(shine => {
+        shine.classList.remove('active');
+      });
+      document.querySelector('h1').classList.remove('active');
+    });
+    
+    // Mobile accelerometer tracking
+    setInterval(() => {
+      if (deviceMotion && hasMotionPermission) {
+        const accel = deviceMotion.accelerationIncludingGravity;
+        
+        // Map accelerometer values to screen position (-10 to 10 range)
+        const x = ((accel.x || 0) / 10 + 1) * 50; // 0-100%
+        const y = ((accel.y || 0) / 10 + 1) * 50; // 0-100%
+        
+        // Clamp values
+        const clampedX = Math.max(0, Math.min(100, x));
+        const clampedY = Math.max(0, Math.min(100, y));
+        
+        // Update link buttons
+        document.querySelectorAll('.link-btn .glass-shine').forEach(shine => {
+          shine.style.left = `${clampedX - 50}%`;
+          shine.style.top = `${clampedY - 50}%`;
+          shine.classList.add('active');
+        });
+        
+        // Update heading
+        const heading = document.querySelector('h1');
+        if (heading) {
+          heading.style.setProperty('--shine-x', `${clampedX}%`);
+          heading.style.setProperty('--shine-y', `${clampedY}%`);
+          heading.classList.add('active');
+        }
+      }
+    }, 16); // ~60fps
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a01887e1cbfbc547',t:'MTc3OTc1Mzk1Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body></html>
