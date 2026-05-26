@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,22 +7,17 @@
   
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
         :root {
-          var(--bg-glass): rgba(185, 230, 250, 0.45);
+          --bg-glass: rgba(185, 230, 250, 0.2);
           --border-glass: rgba(255, 255, 255, 0.4);
-          --shadow-color: rgba(0, 0, 0, 0.08);
-          --shine-x: 50%;
-          --shine-y: 50%;
           --text-blue: #15709c;
           --text-orange: #feaf16;
         }
         
         body { 
           font-family: 'DM Sans', sans-serif;
-          /* Seu fundo do deserto em SVG */
           background-image: url('background.svg');
           background-size: cover;
           background-position: center;
@@ -32,58 +27,99 @@
           overflow-x: hidden;
         }
         
+        /* Base do Vidro Fosco (Distorção) */
         .glass-element {
-          background: rgba(255, 255, 255, 0.3) !important;
-          backdrop-filter: blur(15px) saturate(180%);
-          -webkit-backdrop-filter: blur(15px) saturate(180%);
-          border: 1px solid var(--border-glass);
-          box-shadow: 0 8px 32px var(--shadow-color), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+          background: var(--bg-glass);
+          backdrop-filter: blur(20px) saturate(150%);
+          -webkit-backdrop-filter: blur(20px) saturate(150%);
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          position: relative;
         }
 
         .link-btn { 
-          position: relative;
           color: var(--text-blue);
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
           overflow: hidden;
         }
-        
-        /* Efeito liquid glass no mouse */
+
+        .link-btn:active { transform: scale(0.96); }
+
+        /* O Segredo do Brilho nas Bordas (iOS 26 Style) - Agora calibrado em pixels */
+        .liquid-shine {
+          position: relative;
+        }
+
         .liquid-shine::before {
           content: '';
           position: absolute;
           inset: 0;
-          background: radial-gradient(circle 90px at var(--shine-x) var(--shine-y), rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 80%);
+          border-radius: inherit;
+          padding: 2px; 
+          background: radial-gradient(circle 60px at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.9), transparent 40%);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
           opacity: 0;
-          pointer-events: none;
           transition: opacity 0.3s ease;
-          mix-blend-mode: overlay;
+          pointer-events: none;
+          z-index: 2;
         }
-        
-        .liquid-shine:hover::before { opacity: 1; }
-        .link-btn:active { transform: scale(0.97); }
+
+        .liquid-shine::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: radial-gradient(circle 80px at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.3), transparent 50%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .liquid-shine:hover::before,
+        .liquid-shine:hover::after {
+          opacity: 1;
+        }
         
         .avatar-container {
           position: relative;
           border-radius: 50%;
           overflow: hidden;
-          transition: transform 0.3s ease;
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .avatar-container:hover {
-          transform: scale(1.05);
+          transform: scale(1.08);
         }
 
-        /* Modal do Vídeo (Oculto por padrão) */
+        /* Animação Fluida do Modal */
         #video-modal {
           opacity: 0;
           pointer-events: none;
-          transition: opacity 0.4s ease;
+          transition: all 0.5s ease;
           z-index: 50;
+          backdrop-filter: blur(0px);
+          -webkit-backdrop-filter: blur(0px);
         }
 
         #video-modal.active {
           opacity: 1;
           pointer-events: auto;
+          backdrop-filter: blur(15px);
+          -webkit-backdrop-filter: blur(15px);
+        }
+
+        .modal-content {
+          transform: scale(0.8) translateY(30px);
+          opacity: 0;
+          transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        #video-modal.active .modal-content {
+          transform: scale(1) translateY(0);
+          opacity: 1;
         }
   </style>
 </head>
@@ -91,63 +127,19 @@
   
   <main class="w-full max-w-md flex flex-col items-center gap-4 z-10">
     
-    <div id="avatar-trigger" class="avatar-container w-28 h-28 ring-4 ring-white/50 shadow-lg cursor-pointer glass-element liquid-shine p-1">
+    <div id="avatar-trigger" title="Hold or click for video" class="avatar-container w-28 h-28 cursor-pointer glass-element liquid-shine border border-white/40">
       <img class="w-full h-full object-cover rounded-full" src="logo.png" alt="Logo AquaSun">
     </div>
     
-    <div class="glass-element liquid-shine px-6 py-2 rounded-2xl flex gap-1 relative overflow-hidden">
+    <div class="glass-element liquid-shine px-6 py-2 flex gap-1 relative border border-white/30">
         <span style="color: var(--text-blue); font-weight: 700; font-size: 28px;">Aqua</span>
         <span style="color: var(--text-orange); font-weight: 700; font-size: 28px;">Sun</span>
     </div>
     
-    <p class="text-center max-w-xs mb-2" style="color: var(--text-blue); font-weight: 500; font-size: 14px; line-height: 1.4; text-shadow: 0 1px 2px rgba(255,255,255,0.5);">
+    <p class="text-center max-w-xs mb-2" style="color: var(--text-blue); font-weight: 500; font-size: 14px; line-height: 1.4; text-shadow: 0 1px 2px rgba(255,255,255,0.6);">
         Transforming solar energy into clean water and liquid dignity ☀️
     </p>
 
     <nav class="w-full flex flex-col gap-3" aria-label="Links">
-      <a class="link-btn glass-element liquid-shine flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-semibold text-[15px]" href="https://www.linkedin.com/company/aquasunproject/" target="_blank">
-        <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn
-      </a> 
-      <a class="link-btn glass-element liquid-shine flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-semibold text-[15px]" href="https://www.instagram.com/aquasunproject/" target="_blank">
-        <i data-lucide="instagram" class="w-5 h-5"></i> Instagram
-      </a> 
-      <a class="link-btn glass-element liquid-shine flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-semibold text-[15px]" href="https://www.tiktok.com/@aquasunproject" target="_blank">
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg> TikTok
-      </a> 
-      <a class="link-btn glass-element liquid-shine flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-semibold text-[15px]" href="#" target="_blank">
-        <i data-lucide="globe" class="w-5 h-5"></i> Meu Site
-      </a>
-    </nav>
-  </main>
-
-  <div id="video-modal" class="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="glass-element rounded-3xl w-full max-w-sm overflow-hidden relative shadow-2xl p-2 border border-white/30">
       
-      <button id="close-modal" class="absolute top-4 right-4 z-10 bg-white/50 backdrop-blur text-gray-800 p-2 rounded-full hover:bg-white/80 transition">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="rounded-2xl overflow-hidden aspect-[9/16] bg-gray-900">
-        <video id="promo-video" class="w-full h-full object-cover" playsinline loop muted>
-          <source src="demo-prototipo.mp4" type="video/mp4">
-        </video>
-      </div>
-      
-      <div class="p-4 text-center">
-        <h3 class="font-bold text-lg" style="color: var(--text-blue);">O Protótipo em Ação</h3>
-        <p class="text-sm mt-1" style="color: var(--text-blue);">Destilação híbrida e resfriamento ativo.</p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    lucide.createIcons();
-
-    // 1. EFEITO LIQUID GLASS (Mouse e Giroscópio)
-    const shineElements = document.querySelectorAll('.liquid-shine');
-    
-    function updateShine(element, clientX, clientY) {
-      const rect = element.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-      element.style.setProperty('--shine-x', `${(
+      <a class="link-btn glass-element liquid-shine border border-white/30 flex items-center justify-center gap-2 w-full py-3.5 px-4 font-semibold text-
