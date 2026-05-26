@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -151,7 +151,7 @@
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: none; 
@@ -166,13 +166,14 @@
 
     .modal-content {
       width: 90%;
-      max-width: 360px;
+      /* Aumentado de 360px para 480px para dar mais destaque ao vídeo */
+      max-width: 480px;
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 24px;
-      padding: 8px;
+      padding: 10px;
       transform: scale(0.8) translateY(30px);
       transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
@@ -182,32 +183,42 @@
       transform: scale(1) translateY(0);
     }
 
+    /* NOVO BOTÃO DE FECHAR (Liquid Glass Minimalista) */
     .close-btn {
       position: absolute;
-      top: -15px;
-      right: -15px;
-      background: white;
-      color: var(--text-blue);
-      border: none;
+      top: -16px;
+      right: -16px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff;
       border-radius: 50%;
-      width: 36px; height: 36px;
+      width: 38px; height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.4);
       z-index: 10;
+      transition: all 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.05);
     }
 
     /* Container Responsivo para o iframe do YouTube */
     .youtube-container {
       position: relative;
       width: 100%;
-      /* 56.25% é para vídeos horizontais (16:9). Se seu vídeo for vertical (Shorts), mude para 177.77% */
+      /* 56.25% é para vídeos 16:9. Para vídeos verticais (Shorts), use 177.77% */
       padding-bottom: 56.25%; 
       border-radius: 16px;
       overflow: hidden;
       background: #000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
 
     .youtube-container iframe {
@@ -274,7 +285,7 @@
   <div id="videoModal" class="modal-overlay">
     <div class="modal-content">
       <button id="closeBtn" class="close-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
@@ -284,16 +295,17 @@
         <iframe id="youtubePlayer" src="" title="AquaSun Prototype" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       
-      <div style="padding: 12px; text-align: center;">
-        <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.6);">O Protótipo em Ação</h3>
-        <p style="color: #f1f5f9; font-size: 13px; font-weight: 500; margin-top: 4px; text-shadow: 0 1px 3px rgba(0,0,0,0.6);">Destilação híbrida e resfriamento ativo.</p>
+      <div style="padding: 14px 12px 6px; text-align: center;">
+        <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.6);">The Prototype in Action</h3>
+        <p style="color: #f1f5f9; font-size: 13px; font-weight: 500; margin-top: 4px; text-shadow: 0 1px 3px rgba(0,0,0,0.6);">Hybrid distillation and active cooling.</p>
       </div>
     </div>
   </div>
 
   <script>
-    // Aqui está o seu ID colocado da forma correta:
+    // === SEU ID DO YOUTUBE ===
     const MEU_ID_YOUTUBE = "lAISFycVCpM"; 
+    // =========================
 
     const wrappers = document.querySelectorAll('.liquid-wrapper');
     wrappers.forEach(el => {
@@ -314,7 +326,6 @@
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
       
-      // Agora ele injeta a URL do YouTube perfeitamente usando a constante lá de cima
       ytPlayer.src = `https://www.youtube.com/embed/${MEU_ID_YOUTUBE}?autoplay=1&rel=0&modestbranding=1`;
     }
 
